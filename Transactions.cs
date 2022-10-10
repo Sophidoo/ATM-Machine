@@ -18,11 +18,13 @@ namespace ATM_Machine
         public void Transaction(AccountDetails _accountDetails)
         {
             Console.WriteLine("\n>>> How much do you want to deposit:");
+            Console.Write(">>>");
             _amount.setAmount(Convert.ToDouble(Console.ReadLine()));
 
             _accountDetails.setAccountBalance(_accountDetails.getAccountBalance() + _amount.getAmount());
 
             Console.Write("\n>>>TRANSACTION SUCCESSFULL");
+            _accountDetails.setIsPinCorrect(true);
         }
 
     }
@@ -38,21 +40,21 @@ namespace ATM_Machine
 
             if(_amount.getAmount() >= _accountDetails.getAccountBalance())
             {
-                Console.WriteLine("\n>>>Insufficient Funds");
+                Console.WriteLine("\n>>>Insufficient Funds, Please deposit money into your account.");
+                _accountDetails.setIsPinCorrect(true);
             }
             else
             {
-                Console.WriteLine("\n>>>Please input your pin {0}", _accountDetails.getAccountPin());
-                int ConfirmPin = Convert.ToInt32(Console.ReadLine());
+                _accountDetails.validPin(_accountDetails.getAccountPin());
 
-                if(ConfirmPin != _accountDetails.getAccountPin())
-                {
-                    Console.WriteLine(">>>Incorrect Pin");
-                }
-                else
+                if (_accountDetails.getIsPinCorrect())
                 {
                     _accountDetails.setAccountBalance(_accountDetails.getAccountBalance() - _amount.getAmount());
                     Console.Write("\n>>>Successful! Please Take Your Money");
+                }
+                else
+                {
+                    return;
                 }
             }
         }
@@ -70,35 +72,50 @@ namespace ATM_Machine
         {
 
             Console.WriteLine("\n>>>Please enter the Receiver's account Number");
+            Console.Write(">>>");
             recepientNumber = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("\n>>>Please enter Receiver's Bank Name");
+            Console.Write(">>>");
             recepientBank = Console.ReadLine();
 
             Console.WriteLine("\n>>>Please Enter the amount you are sending");
+            Console.Write(">>>");
             _amount.setAmount(Convert.ToDouble(Console.ReadLine()));
 
-            Console.WriteLine("\n>>>Please Enter your pin");
-            int pin = Convert.ToInt32(Console.ReadLine());
-
-            if(_accountDetails.getAccountPin() == pin)
+            if (_amount.getAmount() >= _accountDetails.getAccountBalance())
             {
-                _accountDetails.setAccountBalance(_accountDetails.getAccountBalance() - _amount.getAmount());
-                Console.WriteLine("\n>>>Sent Sucessfully");
-
-                Console.WriteLine("=====================================================");
-                Console.WriteLine("\n|                  YOUR RECEIPT                   |");
-                Console.WriteLine("=====================================================\n");
-                Console.WriteLine(">>Receivers Account Number: {0}", recepientNumber);
-                Console.WriteLine(">>Receivers' Bank:          {0}", recepientBank);
-                Console.WriteLine(">>Amount Sent:              {0}", _amount.getAmount());
-                Console.WriteLine(">>Transaction Status:       Successfull");
+                Console.WriteLine("\n>>>Insufficient Funds, Please deposit money into your account");
+                _accountDetails.setIsPinCorrect(true);
             }
             else
             {
-                Console.WriteLine("\nInvalid Pin");
+                _accountDetails.validPin(_accountDetails.getAccountPin());
+
+                if (_accountDetails.getIsPinCorrect())
+                {
+                    _accountDetails.setAccountBalance(_accountDetails.getAccountBalance() - _amount.getAmount());
+                    Console.WriteLine("\n>>>Sent Sucessfully");
+
+                    Console.WriteLine("\n=====================================================");
+                    Console.WriteLine("|                   YOUR RECEIPT                    |");
+                    Console.WriteLine("=====================================================");
+                    Console.WriteLine(">>\nReceivers Account Number: {0}", recepientNumber);
+                    Console.WriteLine(">>Receivers' Bank:          {0}", recepientBank);
+                    Console.WriteLine(">>Amount Sent:              {0}", _amount.getAmount());
+                    Console.WriteLine(">>Transaction Status:       Successfull");
+
+                    _accountDetails.setIsPinCorrect(true);
+                }
+                else
+                {
+                    return;
+                }
             }
+
+            
         }
+
 
     }
 
@@ -123,6 +140,7 @@ namespace ATM_Machine
             {
                 _accountDetails.setAccountPin(Confirmpin);
                 Console.WriteLine("\n Pin Sucessfully Changed");
+                _accountDetails.setIsPinCorrect(true);
             }
         }
 
@@ -137,7 +155,10 @@ namespace ATM_Machine
             Console.WriteLine("=======================================================\n");
             Console.WriteLine(">>Account Name:     {0}", _accountDetails.getAccountName());
             Console.WriteLine(">>Your Balance is:  N{0}", _accountDetails.getAccountBalance());
+            _accountDetails.setIsPinCorrect(true);
         }
     }
+    
+    
     
 }

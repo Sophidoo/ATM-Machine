@@ -80,27 +80,33 @@ namespace ATM_Machine
                 change.Transaction(_accountDetails);
             }
 
-            Console.WriteLine("\n\n>>>> Do you want to perform another transaction, if yes write y, if no write n");
-            char answer = Convert.ToChar(Console.ReadLine());
-            
 
-            if(answer == 'y')
+            if (_accountDetails.getIsPinCorrect())
             {
-                Console.WriteLine("Please Input your pin {0}", _accountDetails.getAccountPin());
-                int _pin = Convert.ToInt32(Console.ReadLine());
-                if(_pin == _accountDetails.getAccountPin())
+                Console.WriteLine("\n\n>>>> Do you want to perform another transaction, if yes write y, if no write n");
+                Console.Write(">>>");
+                char answer = Convert.ToChar(Console.ReadLine());
+
+                if(answer == 'y')
                 {
-                    requests();
+                    _accountDetails.validPin(_accountDetails.getAccountPin());
+
+                    if(_accountDetails.getIsPinCorrect())
+                    {
+                        requests();
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Pin");
+                    Console.WriteLine(">>Please take your card");
                 }
             }
-            else
-            {
-                Console.WriteLine("Please take your card");
-            }
+            
+
         }
 
     }
