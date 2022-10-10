@@ -12,7 +12,7 @@ namespace ATM_Machine
         private int pin;
         private double accountBalance;
         
-        public void setAccountName(string accountName)
+        public void setAccountName(string? accountName)
         {
             this.accountName = accountName;
         }
@@ -40,11 +40,6 @@ namespace ATM_Machine
             return accountBalance;
         }
 
-        public void viewAccount()
-        {
-            Console.WriteLine("\n\nYOUR ACCOUNT BALANCE");
-            Console.WriteLine("Account Name: {0}", getAccountName());
-            Console.WriteLine("Your Balance is: N{0}", getAccountBalance());
-        }
+        
     }
 }
