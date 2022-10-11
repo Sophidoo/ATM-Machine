@@ -6,7 +6,7 @@ namespace ATM_Machine
     {
         static void Main(string[] args)
         {
-            AtmRequests requests = new AtmRequests();
+            AtmActions requests = new AtmActions();
 
             requests.CreateAccount();
             requests.requests();

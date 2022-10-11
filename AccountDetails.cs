@@ -70,18 +70,18 @@ namespace ATM_Machine
             setInvalidPinCounter(getInvalidPinCounter() + 1);
             if (getInvalidPinCounter() < 4)
             {
-                Console.WriteLine("Please enter your pin {0}", getAccountPin());
-                Console.Write(">>>");
+                Console.WriteLine("\nPlease enter your pin");
+                Console.Write(">>> ");
                 confirmPin  = Convert.ToInt32(Console.ReadLine());
             }
 
             if(confirmPin != pin && getInvalidPinCounter() < 4)
             {
-                Console.Write("Incorrect,");
+                Console.Write(">>Incorrect,");
                 validPin(pin);
             }else if(getInvalidPinCounter() > 3)
             {
-                Console.WriteLine("\nYour account has been blocked, Please visit your bank");
+                Console.WriteLine("\n>>Your account has been blocked, Please visit your bank");
                 setIsPinCorrect(false);
                 return;
             }

@@ -38,7 +38,7 @@ namespace ATM_Machine
             Console.WriteLine("\n>>>How much do you want to withdraw:");
             _amount.setAmount(Convert.ToDouble(Console.ReadLine()));
 
-            if(_amount.getAmount() >= _accountDetails.getAccountBalance())
+            if(_amount.getAmount() >= _accountDetails.getAccountBalance() || _amount.getAmount() <= 0)
             {
                 Console.WriteLine("\n>>>Insufficient Funds, Please deposit money into your account.");
                 _accountDetails.setIsPinCorrect(true);
@@ -83,9 +83,14 @@ namespace ATM_Machine
             Console.Write(">>>");
             _amount.setAmount(Convert.ToDouble(Console.ReadLine()));
 
-            if (_amount.getAmount() >= _accountDetails.getAccountBalance())
+            if (_amount.getAmount() >= _accountDetails.getAccountBalance() || _amount.getAmount() <= 0)
             {
                 Console.WriteLine("\n>>>Insufficient Funds, Please deposit money into your account");
+                _accountDetails.setIsPinCorrect(true);
+            }
+            else if(recepientNumber.ToString().Length >= 10)
+            {
+                Console.WriteLine("\n>>>Invalid Account Number {0}", recepientNumber.ToString().Length);
                 _accountDetails.setIsPinCorrect(true);
             }
             else

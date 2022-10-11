@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ATM_Machine
 {
-    public class AtmRequests
+    public class AtmActions
     {
         AccountDetails _accountDetails = new AccountDetails();   
         private int action;
