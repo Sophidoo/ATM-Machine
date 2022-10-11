@@ -10,10 +10,6 @@ namespace ATM_Machine
 
             requests.CreateAccount();
             requests.requests();
-
-
-            
-            
         }
 
         

@@ -10,6 +10,8 @@ namespace ATM_Machine
     public class AtmActions
     {
         AccountDetails _accountDetails = new AccountDetails();   
+        AccountPinValidation pinValidation = new AccountPinValidation();
+
         private int action;
         public void setAction(int action)
         {
@@ -57,31 +59,35 @@ namespace ATM_Machine
             if (getAction() == 1)
             {
                 DepositMoney deposit = new DepositMoney();
-                deposit.Transaction(_accountDetails);
+                deposit.Transaction(_accountDetails, pinValidation);
             }
             else if (getAction() == 2)
             {
                 WithdrawMoney withdraw = new WithdrawMoney();
-                withdraw.Transaction(_accountDetails);
+                withdraw.Transaction(_accountDetails, pinValidation);
             }
             else if(getAction() == 3)
             {
                 TransferMoney transfer = new TransferMoney();
-                transfer.Transaction(_accountDetails);
+                transfer.Transaction(_accountDetails, pinValidation);
             }
             else if(getAction() == 4)
             {
                 viewAccount view = new viewAccount();
-                view.Transaction(_accountDetails);
+                view.Transaction(_accountDetails, pinValidation);
             }
             else if(getAction() == 5)
             {
                 ChangingPin change = new ChangingPin();
-                change.Transaction(_accountDetails);
+                change.Transaction(_accountDetails, pinValidation);
+            }
+            else
+            {
+                Console.WriteLine(">>Invalid Entry");
             }
 
 
-            if (_accountDetails.getIsPinCorrect())
+            if (pinValidation.getIsPinCorrect())
             {
                 Console.WriteLine("\n\n>>>> Do you want to perform another transaction, if yes write y, if no write n");
                 Console.Write(">>>");
@@ -89,9 +95,9 @@ namespace ATM_Machine
 
                 if(answer == 'y')
                 {
-                    _accountDetails.validPin(_accountDetails.getAccountPin());
+                    pinValidation.validPin(_accountDetails.getAccountPin());
 
-                    if(_accountDetails.getIsPinCorrect())
+                    if(pinValidation.getIsPinCorrect())
                     {
                         requests();
                     }
